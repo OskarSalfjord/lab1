@@ -113,4 +113,27 @@ class CarTest {
         assertEquals(0.1, Volvo.y);
         assertEquals(0.1, Volvo.x);
     }
+    @Test
+    void gas() {
+        Saab.startEngine();
+        Saab.gas(0.5);
+        Saab.brake(0.3);
+        assertTrue(Saab.getCurrentSpeed() >= 0 && Saab.getCurrentSpeed() <= Saab.enginePower);
+    }
+
+    void gasAndBreakNegative() {
+        Saab.startEngine();
+        double existingSpeed = Saab.currentSpeed;
+
+        Saab.gas(0.8);
+        assertEquals(existingSpeed, Saab.currentSpeed);
+
+        Saab.brake(-0.7);
+        assertEquals(existingSpeed, Saab.currentSpeed);
+    }
+
+    @Test
+    void brake() {
+
+    }
 }

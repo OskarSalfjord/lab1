@@ -57,12 +57,14 @@ public abstract class Car implements Movable{
         currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
     }
     private void decrementSpeed(double amount){
-        currentSpeed = Math.max(getCurrentSpeed() + speedFactor() * amount, 0);
+        currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
     }
     public void gas(double amount){
-        incrementSpeed(amount);
+        if (0 <= amount && amount <= 1)
+            incrementSpeed(amount);
     }
     public void brake(double amount){
-        decrementSpeed(amount);
+        if (0 <= amount && amount <= 1)
+            decrementSpeed(amount);
     }
 }
