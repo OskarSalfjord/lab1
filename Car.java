@@ -39,15 +39,30 @@ public abstract class Car implements Movable{
 
     @Override
     public void turnLeft() {
-        direction = direction - 90;
+        direction = direction + Math.PI/2;
     }
     @Override
     public void turnRight() {
-        direction = direction + 90;
+        direction = direction - Math.PI/2;
     }
     @Override
     public void move() {
-        x = x+getCurrentSpeed()/Math.sin(direction);
-        y = y+getCurrentSpeed()/Math.cos(direction);
+        y = y+getCurrentSpeed()*Math.sin(direction);
+        x = x+getCurrentSpeed()*Math.cos(direction);
+    }
+    double speedFactor(){
+        return 0;
+    }
+    private void incrementSpeed(double amount){
+        currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
+    }
+    private void decrementSpeed(double amount){
+        currentSpeed = Math.max(getCurrentSpeed() + speedFactor() * amount, 0);
+    }
+    public void gas(double amount){
+        incrementSpeed(amount);
+    }
+    public void brake(double amount){
+        decrementSpeed(amount);
     }
 }
