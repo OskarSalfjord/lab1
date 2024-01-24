@@ -1,14 +1,23 @@
 import java.awt.*;
 public abstract class Car implements Movable{
-    public int nrDoors; // Number of doors on the car
-    public double enginePower; // Engine power of the car
-    public double currentSpeed; // The current speed of the car
-    public Color color; // Color of the car
-    public String modelName; // The car model name
+    private int nrDoors;
+    private Color color;
+    private double enginePower;
+    private String modelName;
+    private double currentSpeed;
+    private double x;// x coordinate
+    private double y; // y coordinate
+    private double direction;// direction in radians
 
-    public double x; // x coordinate
-    public double y; // y coordinate
-    public double direction;// direction in degrees
+    public Car(int nrDoors, Color color, double enginePower, String modelName, double x, double y, double direction) {
+        this.nrDoors = nrDoors;
+        this.color = color;
+        this.enginePower = enginePower;
+        this.modelName = modelName;
+        this.x = x;
+        this.y = y;
+        this.direction = direction;
+    }
 
     public int getNrDoors(){
         return nrDoors;
@@ -20,7 +29,15 @@ public abstract class Car implements Movable{
     public double getCurrentSpeed(){
         return currentSpeed;
     }
-
+    public double getX() {
+        return x;
+    }
+    public double getY() {
+        return y;
+    }
+    public double getDirection() {
+        return direction;
+    }
     public Color getColor(){
         return color;
     }
@@ -50,9 +67,7 @@ public abstract class Car implements Movable{
         y = y+getCurrentSpeed()*Math.sin(direction);
         x = x+getCurrentSpeed()*Math.cos(direction);
     }
-    double speedFactor(){
-        return 0;
-    }
+    protected abstract double speedFactor();
     private void incrementSpeed(double amount){
         currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
     }

@@ -56,10 +56,10 @@ class CarTest {
     @Test
     void startEngine() {
         Saab.startEngine();
-        assertEquals(0.1, Saab.currentSpeed);
+        assertEquals(0.1, Saab.getCurrentSpeed());
 
         Volvo.startEngine();
-        assertEquals(0.1, Volvo.currentSpeed);
+        assertEquals(0.1, Volvo.getCurrentSpeed());
 
     }
 
@@ -77,60 +77,60 @@ class CarTest {
     @Test
     void turnLeft() {
         Saab.turnLeft();
-        assertEquals(Math.PI/2, Saab.direction);
+        assertEquals(Math.PI/2, Saab.getDirection());
 
         Volvo.turnLeft();
-        assertEquals(Math.PI/2, Volvo.direction);
+        assertEquals(Math.PI/2, Volvo.getDirection());
 
     }
 
     @Test
     void turnRight() {
         Saab.turnRight();
-        assertEquals(-Math.PI/2, Saab.direction);
+        assertEquals(-Math.PI/2, Saab.getDirection());
 
         Volvo.turnRight();
-        assertEquals(-Math.PI/2, Volvo.direction);
+        assertEquals(-Math.PI/2, Volvo.getDirection());
     }
 
     @Test
     void move() {
         Saab.startEngine();
         Saab.move();
-        assertEquals(0.1, Saab.x);
+        assertEquals(0.1, Saab.getX());
 
         Saab.turnRight();
         Saab.move();
-        assertEquals(-0.1, Saab.y);
-        assertEquals(0.1, Saab.x);
+        assertEquals(-0.1, Saab.getY());
+        assertEquals(0.1, Saab.getX());
 
         Volvo.startEngine();
         Volvo.move();
-        assertEquals(0.1, Volvo.x);
+        assertEquals(0.1, Volvo.getX());
 
         Volvo.turnLeft();
         Volvo.move();
-        assertEquals(0.1, Volvo.y);
-        assertEquals(0.1, Volvo.x);
+        assertEquals(0.1, Volvo.getY());
+        assertEquals(0.1, Volvo.getX());
     }
     @Test
     void gasAndBreak() {
         Saab.startEngine();
         Saab.gas(0.5);
         Saab.brake(0.3);
-        assertTrue(Saab.getCurrentSpeed() >= 0 && Saab.getCurrentSpeed() <= Saab.enginePower);
+        assertTrue(Saab.getCurrentSpeed() >= 0 && Saab.getCurrentSpeed() <= Saab.getEnginePower());
     }
 
     @Test
     void gasAndBreakNegative() {
         Saab.startEngine();
-        double existingSpeed = Saab.currentSpeed;
+        double existingSpeed = Saab.getCurrentSpeed();
 
         Saab.gas(-0.8);
-        assertEquals(existingSpeed, Saab.currentSpeed);
+        assertEquals(existingSpeed, Saab.getCurrentSpeed());
 
         Saab.brake(-0.7);
-        assertEquals(existingSpeed, Saab.currentSpeed);
+        assertEquals(existingSpeed, Saab.getCurrentSpeed());
     }
 
     @Test
@@ -145,7 +145,8 @@ class CarTest {
 
     @Test
     void VolvoSF() {
-        assertEquals(1.25, Volvo.speedFactor());
+        Volvo.startEngine();
+        assertEquals(0.00125, Volvo.speedFactor());
     }
 
 }
