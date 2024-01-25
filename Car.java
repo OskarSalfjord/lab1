@@ -75,18 +75,19 @@ public abstract class Car implements Movable{
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
     }
     protected void gas(double amount) {
-        try {
-            if (0 <= amount && amount <= 1)
+            if (amount < 0 || 1 < amount) {
+                throw new Exception("Invalid input, valid input between [0, 1]");
+            }
+            else {
                 incrementSpeed(amount);
-        } catch (Exception e) {
-            System.out.println("Invalid input, valid input between [0, 1]");
-        }
-    }
+            }
+
 
     protected void brake(double amount){
         try{
-           if (0 <= amount && amount <= 1)
+           if (amount < 0 || 1 < amount) {
                decrementSpeed(amount);
+           }
         }
         catch(Exception e) {
             System.out.println("Invalid input, valid input between [0, 1]");
