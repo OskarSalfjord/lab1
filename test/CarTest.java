@@ -37,7 +37,7 @@ class CarTest {
         assertEquals(0, Saab.getCurrentSpeed());
         assertEquals(0, Volvo.getCurrentSpeed());
     }
-  // fråga ensälla du
+
     @Test
     void getColor() {
         assertEquals(Color.red, Saab.getColor());

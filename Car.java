@@ -1,8 +1,8 @@
 import java.awt.*;
 public abstract class Car implements Movable{
-    private int nrDoors;
+    private final int nrDoors;
     private Color color;
-    private double enginePower;
+    private final double enginePower;
     private String modelName;
     private double currentSpeed;
     private double x;// x coordinate
@@ -19,38 +19,38 @@ public abstract class Car implements Movable{
         this.direction = direction;
     }
 
-    public int getNrDoors(){
+    protected int getNrDoors(){
         return nrDoors;
     }
-    public double getEnginePower(){
+    protected double getEnginePower(){
         return enginePower;
     }
 
-    public double getCurrentSpeed(){
+    protected double getCurrentSpeed(){
         return currentSpeed;
     }
-    public double getX() {
+    protected double getX() {
         return x;
     }
-    public double getY() {
+    protected double getY() {
         return y;
     }
-    public double getDirection() {
+    protected double getDirection() {
         return direction;
     }
-    public Color getColor(){
+    protected Color getColor(){
         return color;
     }
 
-    public void setColor(Color clr){
+    protected void setColor(Color clr){
         color = clr;
     }
 
-    public void startEngine(){
+    protected void startEngine(){
         currentSpeed = 0.1;
     }
 
-    public void stopEngine(){
+    protected void stopEngine(){
         currentSpeed = 0;
     }
 
@@ -74,12 +74,23 @@ public abstract class Car implements Movable{
     private void decrementSpeed(double amount){
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
     }
-    public void gas(double amount){
-        if (0 <= amount && amount <= 1)
-            incrementSpeed(amount);
+    protected void gas(double amount) {
+        try {
+            if (0 <= amount && amount <= 1)
+                incrementSpeed(amount);
+        } catch (Exception e) {
+            System.out.println("Invalid input, valid input between [0, 1]");
+        }
     }
-    public void brake(double amount){
-        if (0 <= amount && amount <= 1)
-            decrementSpeed(amount);
+
+    protected void brake(double amount){
+        try{
+           if (0 <= amount && amount <= 1)
+               decrementSpeed(amount);
+        }
+        catch(Exception e) {
+            System.out.println("Invalid input, valid input between [0, 1]");
+        }
     }
+
 }
