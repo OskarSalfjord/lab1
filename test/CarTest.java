@@ -123,14 +123,8 @@ class CarTest {
 
     @Test
     void gasAndBreakNegative() {
-        Saab.startEngine();
-        double existingSpeed = Saab.getCurrentSpeed();
-
-        Saab.gas(-0.8);
-        assertEquals(existingSpeed, Saab.getCurrentSpeed());
-
-        Saab.brake(-0.7);
-        assertEquals(existingSpeed, Saab.getCurrentSpeed());
+        assertThrows(IllegalArgumentException.class, () -> Saab.gas(-100));
+        assertThrows(IllegalArgumentException.class, () -> Saab.brake(-50));
     }
 
     @Test
