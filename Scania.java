@@ -25,7 +25,7 @@ public class Scania extends Car{
     @Override
     protected void startEngine(){
         if (getTruckBedAngle() != 0) {
-            throw new IllegalCallerException("The truck bed is raised, Scania will not move");
+            throw new IllegalCallerException("The truck bed is raised, This object will not move");
         }
         else {
             currentSpeed = 0.1;
