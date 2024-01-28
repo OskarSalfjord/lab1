@@ -4,16 +4,16 @@ public class Scania extends Car{
     private double truckBedAngle;
 
     public Scania() {
-        super(2, Color.black, 200, "Scania", 0, 0, 0);
+        super(2, Color.black, 200, "Scania", 0, 0, 0, true  );
         this.truckBedAngle = 0;
         stopEngine();
     }
     protected void setTruckBedAngle(double angle) {
         if (getCurrentSpeed() != 0) {
-            throw new IllegalCallerException("Scania is currently moving, stop before altering truck bed angle");
+            throw new IllegalCallerException("This truck is currently moving, stop before altering truck bed angle");
         } else {
             if (angle < 0 || 70 < angle) {
-                throw new IllegalArgumentException("Invalid input, The angle of the Truck Bed should be in [0, 70]");
+                throw new IllegalArgumentException("Invalid input, The angle of the truck bed should be in the range [0, 70]");
             } else {
                 this.truckBedAngle = angle;
             }
@@ -25,7 +25,7 @@ public class Scania extends Car{
     @Override
     protected void startEngine(){
         if (getTruckBedAngle() != 0) {
-            throw new IllegalCallerException("The truck bed is raised, This object will not move");
+            throw new IllegalCallerException("The truck bed is raised, This truck will not move");
         }
         else {
             currentSpeed = 0.1;
