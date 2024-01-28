@@ -4,7 +4,7 @@ public abstract class Car implements Movable{
     private Color color;
     private final double enginePower;
     private String modelName;
-    private double currentSpeed;
+    protected double currentSpeed;
     private double x;// x coordinate
     private double y; // y coordinate
     private double direction;// direction in radians

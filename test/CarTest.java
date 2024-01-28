@@ -10,10 +10,12 @@ class CarTest {
 
     private Saab95 Saab;
     private Volvo240 Volvo;
+    private Scania Scania;
     @BeforeEach
     void setUp() {
         Volvo = new Volvo240();
         Saab = new Saab95();
+        Scania = new Scania();
     }
 
     @AfterEach
@@ -136,11 +138,26 @@ class CarTest {
         double speedFactorNoTurbo = Saab.speedFactor();
         assertTrue(speedFactorOrg == speedFactorNoTurbo && speedFactorOrg*1.3 == speedFactorTurbo);
     }
-
     @Test
     void VolvoSF() {
         Volvo.startEngine();
         assertEquals(0.00125, Volvo.speedFactor());
     }
+    @Test
+    void setTruckBedAngleNegative() {
+        assertThrows(IllegalArgumentException.class, () -> Scania.setTruckBedAngle(-69));
+        assertThrows(IllegalArgumentException.class, () -> Scania.setTruckBedAngle(1337));
+    }
+    @Test
+    void changingAngleWhileMoving() {
+        Scania.startEngine();
+        assertThrows(IllegalCallerException.class, () -> Scania.setTruckBedAngle(5));
+    }
+    @Test
+    void MovingWhileTruckBedIsRaised() {
+        Scania.setTruckBedAngle(69);
+        assertThrows(IllegalCallerException.class, () -> Scania.startEngine());
+    }
+
 
 }
