@@ -1,10 +1,10 @@
 import java.awt.*;
 
-public class Scania extends Car{
+public class Scania extends Truck{
     private double truckBedAngle;
 
     public Scania() {
-        super(2, Color.black, 200, "Scania", 0, 0, 0, true  );
+        super(2, Color.black, 200, "Scania");
         this.truckBedAngle = 0;
         stopEngine();
     }
@@ -15,6 +15,12 @@ public class Scania extends Car{
             if (angle < 0 || 70 < angle) {
                 throw new IllegalArgumentException("Invalid input, The angle of the truck bed should be in the range [0, 70]");
             } else {
+                if (angle == 0) {
+                    setCanMove(true);
+                }
+                else {
+                    setCanMove(false);
+                }
                 this.truckBedAngle = angle;
             }
         }
@@ -22,16 +28,6 @@ public class Scania extends Car{
     protected double getTruckBedAngle() {
         return this.truckBedAngle;
     }
-    @Override
-    protected void startEngine(){
-        if (getTruckBedAngle() != 0) {
-            throw new IllegalCallerException("The truck bed is raised, This truck will not move");
-        }
-        else {
-            currentSpeed = 0.1;
-        }
-    }
-
    @Override
    protected double speedFactor() {
         return getEnginePower() * 0.005;

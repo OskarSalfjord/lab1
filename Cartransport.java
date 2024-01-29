@@ -1,11 +1,11 @@
 import java.awt.*;
 import java.util.Stack;
 
-public class Cartransport extends Car {
+public class Cartransport extends Truck {
     private boolean CanBeLoaded;
     private Stack<Car> carRamp = new Stack<Car>();
     public Cartransport() {
-        super(2, Color.darkGray, 500, "Cartransport", 0, 0, 0, false);
+        super(2, Color.darkGray, 500, "Cartransporter3000");
         CanBeLoaded = false;
     }
     protected boolean getCanBeLoaded(){
@@ -21,7 +21,7 @@ public class Cartransport extends Car {
         else {
             throw new IllegalArgumentException("This car can not be loaded onto the ramp");
         }
-        
+
     }
 
     @Override
