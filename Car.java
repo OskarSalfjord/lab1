@@ -4,30 +4,38 @@ public abstract class Car implements Movable{
     private Color color;
     private final double enginePower;
     private String modelName;
+
+    private final double weight;
+
     protected double currentSpeed;
     private double x;// x coordinate
     private double y; // y coordinate
     private double direction;// direction in radians
-    private boolean loadable; // Determines if the car can be loaded
 
-    public Car(int nrDoors, Color color, double enginePower, String modelName, double x, double y, double direction, boolean loadable) {
+    public Car(int nrDoors, Color color, double enginePower, String modelName,  double weight, double x, double y, double direction) {
         this.nrDoors = nrDoors;
         this.color = color;
         this.enginePower = enginePower;
         this.modelName = modelName;
+        this.weight = weight;
         this.x = x;
         this.y = y;
         this.direction = direction;
-        this.loadable = loadable;
     }
-    protected boolean getLoadable() {
-        return this.loadable;
-    }
+
     protected int getNrDoors(){
         return nrDoors;
     }
     protected double getEnginePower(){
         return enginePower;
+    }
+
+    protected String getModelName(){
+        return modelName;
+    }
+
+    protected double getWeight(){
+        return weight;
     }
 
     protected double getCurrentSpeed(){

@@ -4,7 +4,7 @@ public class Scania extends Truck{
     private double truckBedAngle;
 
     public Scania() {
-        super(2, Color.black, 200, "Scania");
+        super(2, Color.black, 200, "Scania", 5000);
         this.truckBedAngle = 0;
         stopEngine();
     }

@@ -4,8 +4,8 @@ public abstract class Truck extends Car {
     private boolean CanMove;
 
 
-    public Truck(int nrDoors, Color color, double enginePower, String modelName) {
-        super(nrDoors, color, enginePower, modelName, 0, 0, 0, false);
+    public Truck(int nrDoors, Color color, double enginePower, String modelName, double weight) {
+        super(nrDoors, color, enginePower, modelName, weight, 0, 0, 0);
         this.CanMove = true;
     }
     protected boolean getCanMove() {

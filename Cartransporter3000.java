@@ -11,10 +11,13 @@ public class Cartransporter3000 extends Truck {
 
     private final int maximumLoad;
 
+    private double maxWeight;
+
     public Cartransporter3000() {
-        super(2, Color.darkGray, 500, "Cartransporter3000");
+        super(2, Color.darkGray, 500, "Cartransporter3000", 3000);
         this.maximumLoad = 4;
         this.currentRampState = Ramp.RAISED;
+        this.maxWeight = 1500;
     }
 
     protected Ramp getRamp() {
@@ -35,7 +38,7 @@ public class Cartransporter3000 extends Truck {
     }
 
     protected void loadCar(Car carToLoad) {
-        if (carToLoad.getLoadable()) {
+        if (carToLoad.getWeight() <= this.maxWeight) {
             if (Math.sqrt(Math.pow(carToLoad.getX() - this.getX(), 2) + Math.pow(carToLoad.getY() - this.getY(), 2)) <= 1) {
                 if (getRamp() == Ramp.LOWERED) {
                     if (loadedCars.size() < maximumLoad) {
