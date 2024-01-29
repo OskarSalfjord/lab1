@@ -2,13 +2,10 @@ import java.awt.*;
 
 public class Scania extends Truck{
     private double truckBedAngle;
-    private boolean rampRaised;
-    private int nrCarsLoaded;
+
     public Scania() {
         super(2, Color.black, 200, "Scania");
         this.truckBedAngle = 0;
-        this.rampRaised = true;
-        this.nrCarsLoaded = 0;
         stopEngine();
     }
     protected void setTruckBedAngle(double angle) {
