@@ -1,19 +1,31 @@
 import java.awt.*;
 import java.util.Stack;
 
-public class Cartransport extends Truck {
-    private boolean CanBeLoaded;
-    private Stack<Car> carRamp = new Stack<Car>();
+public abstract class Cartransport extends Truck {
+    private enum Ramp {
+        RAISED, LOWERED
+    }
+
+    private Stack<Car> carRamp = new Stack<>();
+    private Ramp currentRampState;
+
     public Cartransport() {
         super(2, Color.darkGray, 500, "Cartransporter3000");
-        CanBeLoaded = false;
+        this.currentRampState = Ramp.RAISED;
     }
-    protected boolean getCanBeLoaded(){
-        return this.CanBeLoaded;
+
+    protected Ramp getRamp() {
+        return this.currentRampState;
     }
-    protected void setCanBeLoaded(boolean status) {
-        this.CanBeLoaded = status;
+
+    protected void raiseRamp() {
+        this.currentRampState = Ramp.RAISED;
     }
+
+    protected void lowerRamp() {
+        this.currentRampState = Ramp.LOWERED;
+    }
+}
     protected void loadCar(Car carToLoad) {
         if (carToLoad.getLoadable()) {
             carRamp.add(carToLoad);
