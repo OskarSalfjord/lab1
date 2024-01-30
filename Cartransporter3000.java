@@ -67,4 +67,25 @@ public class Cartransporter3000 extends Truck {
     protected double speedFactor() {
         return getEnginePower() * 0.08 / (maximumLoad + 1);
     }
+    @Override
+    public void turnLeft() {
+        this.turnLeft();
+        for (Car car: loadedCars) {
+            car.turnLeft();
+        }
+    }
+    @Override
+    public void turnRight() {
+        this.turnRight();
+        for (Car car: loadedCars) {
+            car.turnRight();
+        }
+    }
+    @Override
+    public void move() {
+        this.move();
+        for (Car car: loadedCars) {
+            car.move();
+        }
+    }
 }
