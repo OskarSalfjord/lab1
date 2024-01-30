@@ -67,25 +67,44 @@ public class Cartransporter3000 extends Truck {
     protected double speedFactor() {
         return getEnginePower() * 0.08 / (maximumLoad + 1);
     }
-    @Override
-    public void turnLeft() {
+
+    protected void turnLeft(int NoOfItemsInStack) {
         this.turnLeft();
-        for (Car car: loadedCars) {
-            car.turnLeft();
+        int i = 0;
+        while (i < NoOfItemsInStack) {
+            loadedCars.elementAt(i).turnLeft();
+            i++;
         }
     }
-    @Override
-    public void turnRight() {
+    protected void turnRight(int NoOfItemsInStack) {
         this.turnRight();
-        for (Car car: loadedCars) {
-            car.turnRight();
+        int i = 0;
+        while (i < NoOfItemsInStack) {
+            loadedCars.elementAt(i).turnRight();
+            i++;
         }
     }
-    @Override
-    public void move() {
+    protected void move(int NoOfItemsInStack) {
         this.move();
-        for (Car car: loadedCars) {
-            car.move();
+        int i = 0;
+        while (i < NoOfItemsInStack) {
+            loadedCars.elementAt(i).move();
+            i++;
+        }
+    }
+    protected void gas(double amount, int NoOfItemsInStack) {
+        this.gas(amount);
+        int i = 0;
+        while (i < NoOfItemsInStack) {
+            loadedCars.elementAt(i).gas(amount);
+            i++;
+        }
+    }
+    protected void brake(double amount, int NoOfItemsInStack) {
+        this.brake(amount);
+        int i = 0;
+        while (i < NoOfItemsInStack) {
+            loadedCars.elementAt(i).brake(amount);
         }
     }
 }
