@@ -12,7 +12,7 @@ public abstract class Car implements Movable{
     private double y; // y coordinate
     private double direction;// direction in radians
 
-    public Car(int nrDoors, Color color, double enginePower, String modelName,  double weight, double x, double y, double direction) {
+    public Car(int nrDoors, Color color, double enginePower, String modelName, double weight, double x, double y, double direction) {
         this.nrDoors = nrDoors;
         this.color = color;
         this.enginePower = enginePower;
@@ -56,7 +56,6 @@ public abstract class Car implements Movable{
     protected Color getColor(){
         return color;
     }
-
     protected void setColor(Color clr){
         color = clr;
     }
