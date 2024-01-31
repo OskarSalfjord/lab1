@@ -46,6 +46,8 @@ public class Cartransporter3000 extends Truck {
                 if (getRamp() == Ramp.LOWERED) {
                     if (loadedCars.size() < maximumLoad) {
                         loadedCars.add(carToLoad);
+                        carToLoad.setPosition(this.getX(), this.getY());
+                        carToLoad.setDirection(getDirection());
                     } else {
                         throw new IllegalCallerException("The car transport is full");
                     }
@@ -61,7 +63,8 @@ public class Cartransporter3000 extends Truck {
     }
     protected void unLoadCar() {
         if (getRamp() == Ramp.LOWERED) {
-            loadedCars.pop();
+            Car UnloadedCar = loadedCars.pop();
+            UnloadedCar.setPosition(getX(), getY() - 0.5);
 
         } else {
             throw new IllegalCallerException("The ramp is raised, car can not be unloaded");
@@ -69,46 +72,43 @@ public class Cartransporter3000 extends Truck {
     }
     @Override
     protected double speedFactor() {
-        return getEnginePower() * 0.08 / (loadedCars.size() + 1);
+        return getEnginePower() * 0.002 * (0.9 * loadedCars.size());
     }
-
-    protected void turnLeft(int NoOfItemsInStack) {
-        this.turnLeft();
-        int i = 0;
-        while (i < NoOfItemsInStack) {
-            loadedCars.elementAt(i).turnLeft();
-            i++;
+    @Override
+    public void turnLeft() {
+        super.turnLeft();
+        for (Car car : loadedCars) {
+            car.turnLeft();
         }
     }
-    protected void turnRight(int NoOfItemsInStack) {
-        this.turnRight();
-        int i = 0;
-        while (i < NoOfItemsInStack) {
-            loadedCars.elementAt(i).turnRight();
-            i++;
+    @Override
+    public void turnRight() {
+        super.turnRight();
+        for (Car car : loadedCars) {
+            car.turnRight();
         }
     }
-    protected void move(int NoOfItemsInStack) {
-        this.move();
-        int i = 0;
-        while (i < NoOfItemsInStack) {
-            loadedCars.elementAt(i).move();
-            i++;
+    @Override
+    public void move() {
+        super.move();
+        for (Car car : loadedCars) {
+            car.setPosition(getX(), getY());
         }
     }
-    protected void gas(double amount, int NoOfItemsInStack) {
-        this.gas(amount);
-        int i = 0;
-        while (i < NoOfItemsInStack) {
-            loadedCars.elementAt(i).gas(amount);
-            i++;
+    @Override
+    protected void gas(double amount) {
+        super.gas(amount);
+        for (Car car : loadedCars) {
+            double speedfactorchange = (speedFactor() / car.getSpeedFactor());
+            car.gas(amount * speedfactorchange);
         }
     }
-    protected void brake(double amount, int NoOfItemsInStack) {
-        this.brake(amount);
-        int i = 0;
-        while (i < NoOfItemsInStack) {
-            loadedCars.elementAt(i).brake(amount);
+    @Override
+    protected void brake(double amount) {
+        super.brake(amount);
+        for (Car car : loadedCars) {
+            double speedfactorchange = (speedFactor() / car.getSpeedFactor());
+            car.brake(amount * speedfactorchange);
         }
     }
 }

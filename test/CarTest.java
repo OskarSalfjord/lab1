@@ -148,7 +148,7 @@ class CarTest {
     @Test
     void VolvoSF() {
         Volvo.startEngine();
-        assertEquals(0.00125, Volvo.speedFactor());
+        assertEquals(1.25, Volvo.speedFactor());
     }
     @Test
     void setTruckBedAngleNegative() {
@@ -210,8 +210,8 @@ class CarTest {
         Cartransporter.lowerRamp();
         Cartransporter.loadCar(Volvo);
         Cartransporter.raiseRamp();
-        Cartransporter.gas(1, 1);
-        Cartransporter.move(1);
+        Cartransporter.gas(1);
+        Cartransporter.move();
         assertTrue(Cartransporter.getX() == Cartransporter.loadedCars.peek().getX() && Cartransporter.getY() == Cartransporter.loadedCars.peek().getY());
     }
     @Test
@@ -246,7 +246,35 @@ class CarTest {
         Cartransporter.loadCar(Volvo);
         Cartransporter.loadCar(Saab);
         Cartransporter.unLoadCar();
-        assertTrue(Cartransporter.loadedCars.contains(Volvo));
+        assertTrue(Cartransporter.loadedCars.size() == 1 && Cartransporter.loadedCars.contains(Volvo));
+    }
+    @Test
+    void TurningLeftWithLoad() {
+        Cartransporter.lowerRamp();
+        Cartransporter.loadCar(Volvo);
+        Cartransporter.raiseRamp();
+        Cartransporter.turnLeft();
+        Cartransporter.gas(0.03);
+        assertTrue(Cartransporter.getX() == 0 && Volvo.getX() == 0);
+    }
+    @Test
+    void TurningRightWithLoad() {
+        Cartransporter.lowerRamp();
+        Cartransporter.loadCar(Volvo);
+        Cartransporter.raiseRamp();
+        Cartransporter.turnRight();
+        Cartransporter.gas(0.03);
+        assertTrue(Cartransporter.getX() == 0 && Volvo.getX() == 0);
+    }
+    @Test
+    void BrakeWithLoad() {
+        Cartransporter.lowerRamp();
+        Cartransporter.loadCar(Volvo);
+        Cartransporter.raiseRamp();
+        Cartransporter.startEngine();
+        assertFalse(Cartransporter.getCurrentSpeed() == 0 && Cartransporter.loadedCars.peek().getCurrentSpeed() == 0);
+        Cartransporter.brake(1);
+        assertTrue(Cartransporter.getCurrentSpeed() == 0 && Cartransporter.loadedCars.peek().getCurrentSpeed() == 0);
     }
 
 

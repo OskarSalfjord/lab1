@@ -50,6 +50,9 @@ public abstract class Car implements Movable{
     protected double getDirection() {
         return direction;
     }
+    protected void setDirection(double NewDirection) {
+        this.direction = NewDirection;
+    }
     protected Color getColor(){
         return color;
     }
@@ -80,6 +83,13 @@ public abstract class Car implements Movable{
         x = x+getCurrentSpeed()*Math.cos(direction);
     }
     protected abstract double speedFactor();
+    protected double getSpeedFactor() {
+        return this.speedFactor();
+    }
+    protected void setPosition(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
     private void incrementSpeed(double amount){
         currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
     }
@@ -94,7 +104,6 @@ public abstract class Car implements Movable{
             incrementSpeed(amount);
         }
     }
-
     protected void brake(double amount){
            if (amount < 0 || 1 < amount) {
                throw new IllegalArgumentException("Invalid input, valid input between [0, 1]");
