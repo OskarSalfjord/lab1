@@ -72,8 +72,21 @@ public class Cartransporter3000 extends Truck implements Loadable{
         }
     }
     @Override
-    protected double speedFactor() {
-        return getEnginePower() * 0.002 * (0.9 * loadedCars.size());
+    protected double speedFactor() {return getEnginePower() * 0.002 * (0.9 / (loadedCars.size() + 1));
+    }
+    @Override
+    protected void startEngine() {
+        super.startEngine();
+        for (Car car : loadedCars) {
+            car.startEngine();
+        }
+    }
+    @Override
+    protected void stopEngine() {
+        super.stopEngine();
+        for (Car car : loadedCars) {
+            car.stopEngine();
+        }
     }
     @Override
     public void turnLeft() {

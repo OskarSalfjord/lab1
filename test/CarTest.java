@@ -65,13 +65,11 @@ class CarTest {
     @Test
     void startEngine() {
         Saab.startEngine();
-        assertEquals(0.1, Saab.getCurrentSpeed());
+        assertTrue(Saab.getEngineOn());
 
         Volvo.startEngine();
-        assertEquals(0.1, Volvo.getCurrentSpeed());
-
-    }
-
+        assertTrue(Volvo.getEngineOn());
+        }
     @Test
     void stopEngine() {
         Saab.startEngine();
@@ -80,7 +78,7 @@ class CarTest {
 
         Volvo.startEngine();
         Volvo.stopEngine();
-        assertEquals(0, Volvo.getCurrentSpeed());
+        assertFalse(Volvo.getEngineOn());
     }
 
     @Test
@@ -105,22 +103,24 @@ class CarTest {
     @Test
     void move() {
         Saab.startEngine();
+        Saab.gas(0.1);
         Saab.move();
-        assertEquals(0.1, Saab.getX());
+        assertTrue(Saab.getX() > 0);
 
         Saab.turnRight();
         Saab.move();
-        assertEquals(-0.1, Saab.getY());
-        assertEquals(0.1, Saab.getX());
+        assertEquals(-0.125, Saab.getY());
+        assertEquals(0.125, Saab.getX());
 
         Volvo.startEngine();
+        Volvo.gas(0.1);
         Volvo.move();
-        assertEquals(0.1, Volvo.getX());
+        assertEquals(0.125, Volvo.getX());
 
         Volvo.turnLeft();
         Volvo.move();
-        assertEquals(0.1, Volvo.getY());
-        assertEquals(0.1, Volvo.getX());
+        assertEquals(0.125, Volvo.getY());
+        assertEquals(0.125, Volvo.getX());
     }
     @Test
     void gasAndBreak() {
@@ -132,8 +132,13 @@ class CarTest {
 
     @Test
     void gasAndBreakNegative() {
+        Saab.startEngine();
         assertThrows(IllegalArgumentException.class, () -> Saab.gas(-100));
         assertThrows(IllegalArgumentException.class, () -> Saab.brake(-50));
+    }
+    @Test
+    void gasWithEngineTurnedOff() {
+        assertThrows(IllegalCallerException.class, () -> Saab.gas(0.5));
     }
 
     @Test
@@ -151,6 +156,11 @@ class CarTest {
         assertEquals(1.25, Volvo.speedFactor());
     }
     @Test
+    void gettingAccurateTBA() {
+        Scania.setTruckBedAngle(1);
+        assertEquals(1, Scania.getTruckBedAngle());
+    }
+    @Test
     void setTruckBedAngleNegative() {
         assertThrows(IllegalArgumentException.class, () -> Scania.setTruckBedAngle(-69));
         assertThrows(IllegalArgumentException.class, () -> Scania.setTruckBedAngle(1337));
@@ -158,6 +168,7 @@ class CarTest {
     @Test
     void changingAngleWhileMoving() {
         Scania.startEngine();
+        Scania.gas(0.3);
         assertThrows(IllegalCallerException.class, () -> Scania.setTruckBedAngle(5));
     }
     @Test
@@ -172,7 +183,9 @@ class CarTest {
     }
     @Test
     void LowerRampWhileMoving() {
+        Cartransporter.raiseRamp();
         Cartransporter.startEngine();
+        Cartransporter.gas(1);
         assertThrows(IllegalCallerException.class, () -> Cartransporter.lowerRamp());
     }
     @Test
@@ -210,9 +223,10 @@ class CarTest {
         Cartransporter.lowerRamp();
         Cartransporter.loadCar(Volvo);
         Cartransporter.raiseRamp();
+        Cartransporter.startEngine();
         Cartransporter.gas(1);
         Cartransporter.move();
-        assertTrue(Cartransporter.getX() == Cartransporter.loadedCars.peek().getX() && Cartransporter.getY() == Cartransporter.loadedCars.peek().getY());
+        assertTrue(Cartransporter.getX() != 0 && Cartransporter.getX() == Cartransporter.loadedCars.peek().getX() && Cartransporter.getY() == Cartransporter.loadedCars.peek().getY());
     }
     @Test
      void UnloadCar() {
@@ -227,6 +241,7 @@ class CarTest {
         Cartransporter.loadCar(Volvo);
         Cartransporter.raiseRamp();
         Cartransporter.startEngine();
+        Cartransporter.gas(0.3);
         Cartransporter.move();
         Cartransporter.stopEngine();
         Cartransporter.lowerRamp();
@@ -254,6 +269,7 @@ class CarTest {
         Cartransporter.loadCar(Volvo);
         Cartransporter.raiseRamp();
         Cartransporter.turnLeft();
+        Cartransporter.startEngine();
         Cartransporter.gas(0.03);
         assertTrue(Cartransporter.getX() == 0 && Volvo.getX() == 0);
     }
@@ -263,6 +279,7 @@ class CarTest {
         Cartransporter.loadCar(Volvo);
         Cartransporter.raiseRamp();
         Cartransporter.turnRight();
+        Cartransporter.startEngine();
         Cartransporter.gas(0.03);
         assertTrue(Cartransporter.getX() == 0 && Volvo.getX() == 0);
     }
@@ -272,6 +289,7 @@ class CarTest {
         Cartransporter.loadCar(Volvo);
         Cartransporter.raiseRamp();
         Cartransporter.startEngine();
+        Cartransporter.gas(0.1);
         assertFalse(Cartransporter.getCurrentSpeed() == 0 && Cartransporter.loadedCars.peek().getCurrentSpeed() == 0);
         Cartransporter.brake(1);
         assertTrue(Cartransporter.getCurrentSpeed() == 0 && Cartransporter.loadedCars.peek().getCurrentSpeed() == 0);

@@ -11,8 +11,9 @@ public abstract class Car implements Movable{
     private double x;// x coordinate
     private double y; // y coordinate
     private double direction;// direction in radians
+    private boolean engineOn;
 
-    public Car(int nrDoors, Color color, double enginePower, String modelName, double weight, double x, double y, double direction) {
+    public Car(int nrDoors, Color color, double enginePower, String modelName, double weight, double x, double y, double direction, boolean engineOn) {
         this.nrDoors = nrDoors;
         this.color = color;
         this.enginePower = enginePower;
@@ -21,6 +22,10 @@ public abstract class Car implements Movable{
         this.x = x;
         this.y = y;
         this.direction = direction;
+        this.engineOn = engineOn;
+    }
+    protected boolean getEngineOn() {
+        return this.engineOn;
     }
 
     protected int getNrDoors(){
@@ -61,11 +66,12 @@ public abstract class Car implements Movable{
     }
 
     protected void startEngine(){
-        currentSpeed = 0.1;
+        this.engineOn = true;
     }
 
     protected void stopEngine(){
-        currentSpeed = 0;
+        this.currentSpeed = 0;
+        this.engineOn = false;
     }
 
     @Override
@@ -96,11 +102,16 @@ public abstract class Car implements Movable{
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
     }
     protected void gas(double amount) {
-        if (amount < 0 || 1 < amount) {
-            throw new IllegalArgumentException("Invalid input, valid input between [0, 1]");
+        if (engineOn) {
+            if (amount < 0 || 1 < amount) {
+                throw new IllegalArgumentException("Invalid input, valid input between [0, 1]");
+            }
+            else {
+                incrementSpeed(amount);
+            }
         }
         else {
-            incrementSpeed(amount);
+            throw new IllegalCallerException("Turn engine on before trying to move");
         }
     }
     protected void brake(double amount){

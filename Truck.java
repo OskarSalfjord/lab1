@@ -5,11 +5,8 @@ public abstract class Truck extends Car {
 
 
     public Truck(int nrDoors, Color color, double enginePower, String modelName, double weight) {
-        super(nrDoors, color, enginePower, modelName, weight, 0, 0, 0);
+        super(nrDoors, color, enginePower, modelName, weight, 0, 0, 0, false);
         this.CanMove = true;
-    }
-    protected boolean getCanMove() {
-        return this.CanMove;
     }
     protected void setCanMove(boolean status) {
         this.CanMove = status;
@@ -22,7 +19,7 @@ public abstract class Truck extends Car {
             throw new IllegalCallerException("This truck is available for loading goods, can not move");
         }
         else {
-            currentSpeed = 0.1;
+            super.startEngine();
         }
     }
 }
