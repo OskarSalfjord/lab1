@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.Stack;
 
-public class Cartransporter3000 extends Truck {
+public class Cartransporter3000 extends Truck implements Loadable{
     protected enum Ramp {
         RAISED, LOWERED
     }
@@ -39,8 +39,8 @@ public class Cartransporter3000 extends Truck {
             throw new IllegalCallerException("The car transport is moving, ramp cannot be lowered");
         }
     }
-
-    protected void loadCar(Car carToLoad) {
+    @Override
+    public void loadCar(Car carToLoad) {
         if (carToLoad.getWeight() <= this.maxWeight) {
             if (Math.sqrt(Math.pow(carToLoad.getX() - this.getX(), 2) + Math.pow(carToLoad.getY() - this.getY(), 2)) <= 1) {
                 if (getRamp() == Ramp.LOWERED) {
@@ -59,7 +59,8 @@ public class Cartransporter3000 extends Truck {
             throw new IllegalArgumentException("The car is not loadable");
         }
     }
-    protected void unLoadCar() {
+
+    public void unLoadCar() {
         if (getRamp() == Ramp.LOWERED) {
             loadedCars.pop();
 
