@@ -18,7 +18,7 @@ public abstract class Truck extends Car {
 
     @Override
     protected void startEngine(){
-        if (CanMove) {
+        if (!CanMove) {
             throw new IllegalCallerException("This truck is available for loading goods, can not move");
         }
         else {

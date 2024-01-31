@@ -2,11 +2,11 @@ import java.awt.*;
 import java.util.Stack;
 
 public class Cartransporter3000 extends Truck {
-    private enum Ramp {
+    protected enum Ramp {
         RAISED, LOWERED
     }
 
-    private Stack<Car> loadedCars = new Stack<>();
+    protected Stack<Car> loadedCars = new Stack<>();
     private Ramp currentRampState;
 
     private final int maximumLoad;
@@ -15,9 +15,10 @@ public class Cartransporter3000 extends Truck {
 
     public Cartransporter3000() {
         super(2, Color.darkGray, 500, "Cartransporter3000", 3000);
-        this.maximumLoad = 4;
+        this.maximumLoad = 2;
         this.currentRampState = Ramp.RAISED;
         this.maxWeight = 1500;
+        this.setCanMove(true);
     }
 
     protected Ramp getRamp() {
@@ -26,11 +27,13 @@ public class Cartransporter3000 extends Truck {
 
     protected void raiseRamp() {
         this.currentRampState = Ramp.RAISED;
+        this.setCanMove(true);
     }
 
     protected void lowerRamp() {
         if(currentSpeed == 0) {
             this.currentRampState = Ramp.LOWERED;
+            this.setCanMove(false);
         }
         else{
             throw new IllegalCallerException("The car transport is moving, ramp cannot be lowered");
@@ -44,10 +47,10 @@ public class Cartransporter3000 extends Truck {
                     if (loadedCars.size() < maximumLoad) {
                         loadedCars.add(carToLoad);
                     } else {
-                        throw new IllegalArgumentException("The car transport is full");
+                        throw new IllegalCallerException("The car transport is full");
                     }
                 } else {
-                    throw new IllegalArgumentException("The ramp is raised, car can not be loaded");
+                    throw new IllegalCallerException("The ramp is raised, car can not be loaded");
                 }
             } else{
                 throw new IllegalCallerException("The car is too far away from the transporter");
@@ -59,13 +62,14 @@ public class Cartransporter3000 extends Truck {
     protected void unLoadCar() {
         if (getRamp() == Ramp.LOWERED) {
             loadedCars.pop();
+
         } else {
-            throw new IllegalArgumentException("The ramp is raised, car can not be unloaded");
+            throw new IllegalCallerException("The ramp is raised, car can not be unloaded");
         }
     }
     @Override
     protected double speedFactor() {
-        return getEnginePower() * 0.08 / (maximumLoad + 1);
+        return getEnginePower() * 0.08 / (loadedCars.size() + 1);
     }
 
     protected void turnLeft(int NoOfItemsInStack) {
