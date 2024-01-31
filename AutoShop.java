@@ -2,8 +2,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class AutoShop <T extends Car> implements Loadable<T> {
-
+public class AutoShop <T> implements Loadable<T>{
     private int capacity;
     private List<T> carsInShop;
 
@@ -15,7 +14,6 @@ public class AutoShop <T extends Car> implements Loadable<T> {
         }
         this.carsInShop = carsInShop;
     }
-
     private void setCapacity(int capacity) {
         if (capacity > 0) {
             this.capacity = capacity;
@@ -29,11 +27,10 @@ public class AutoShop <T extends Car> implements Loadable<T> {
             {carsInShop.add(carToLoad);}}
         else{throw new IllegalArgumentException("Shop is full");}
     }
-    @Override
-    public void unLoadCar (T carToUnload){
+
+    public void unLoadCar(T carToUnload){
         carsInShop.remove(carToUnload);
     }
-
     public static void main (String[]args){
         Volvo240 volvo1 = new Volvo240();
         Saab95 saab1 = new Saab95();
@@ -42,7 +39,7 @@ public class AutoShop <T extends Car> implements Loadable<T> {
         List<Saab95> cars = new ArrayList<>();
         cars.add(saab1);
 
-        AutoShop<Saab95> autoshop = new AutoShop<>(5, cars);
+        AutoShop<Saab95> autoshop = new AutoShop<>(-5, cars);
         autoshop.loadCar(saab2);
         autoshop.unLoadCar(saab1);
         autoshop.loadCar(volvo1);
