@@ -3,8 +3,8 @@ import java.awt.*;
 public class Scania extends Truck{
     private double truckBedAngle;
 
-    public Scania() {
-        super(2, Color.black, 200, "Scania", 5000);
+    public Scania(Color color, double x, double y, double direction) {
+        super(2,color, 200, "Scania", 5000, x, y, direction);
         this.truckBedAngle = 0;
         stopEngine();
     }
@@ -16,10 +16,10 @@ public class Scania extends Truck{
                 throw new IllegalArgumentException("Invalid input, The angle of the truck bed should be in the range [0, 70]");
             } else {
                 if (angle == 0) {
-                    setCanMove(true);
+                    setWorking(false);
                 }
                 else {
-                    setCanMove(false);
+                    setWorking(true);
                 }
                 this.truckBedAngle = angle;
             }

@@ -11,14 +11,13 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>{
 
     private final int maximumLoad;
 
-    private double maxWeight;
+    private final double maxWeight;
 
-    public Cartransporter3000() {
-        super(2, Color.darkGray, 500, "Cartransporter3000", 3000);
+    public Cartransporter3000(Color color, double x, double y, double direction) {
+        super(2, color, 500, "Cartransporter3000", 3000, 0, 0, 0);
         this.maximumLoad = 2;
         this.currentRampState = Ramp.RAISED;
         this.maxWeight = 1500;
-        this.setCanMove(true);
     }
 
     protected Ramp getRamp() {
@@ -27,13 +26,13 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>{
 
     protected void raiseRamp() {
         this.currentRampState = Ramp.RAISED;
-        this.setCanMove(true);
+        this.setWorking(false);
     }
 
     protected void lowerRamp() {
         if(currentSpeed == 0) {
             this.currentRampState = Ramp.LOWERED;
-            this.setCanMove(false);
+            this.setWorking(true);
         }
         else{
             throw new IllegalCallerException("The car transport is moving, ramp cannot be lowered");

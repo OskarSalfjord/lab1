@@ -14,15 +14,13 @@ class CarTest {
     private Volvo240 Volvo;
     private Scania Scania;
     private Cartransporter3000 Cartransporter;
-    private Cartransporter3000 Cartransporter2;
     @BeforeEach
     void setUp() {
-        Volvo = new Volvo240();
-        Saab = new Saab95();
-        Saab2 = new Saab95();
-        Scania = new Scania();
-        Cartransporter = new Cartransporter3000();
-        Cartransporter2 = new Cartransporter3000();
+        Volvo = new Volvo240(Color.black, 0, 0, 0);
+        Saab = new Saab95(Color.red, 0, 0, 0);
+        Saab2 = new Saab95(Color.CYAN, 0.5, 0, 0);
+        Scania = new Scania(Color.lightGray, -0.5, 0 , 0);
+        Cartransporter = new Cartransporter3000(Color.orange, 0, 0, 0);
     }
 
     @AfterEach
@@ -205,11 +203,6 @@ class CarTest {
         Saab.move();
         Cartransporter.lowerRamp();
         assertThrows(IllegalCallerException.class, () -> Cartransporter.loadCar(Saab));
-    }
-    @Test
-    void LoadingAnotherCartransporter() {
-        Cartransporter.lowerRamp();
-        assertThrows(IllegalArgumentException.class, () -> Cartransporter.loadCar(Cartransporter2));
     }
     @Test
     void LoadingTooManyCars() { // Maximum no. of cars is set to 2

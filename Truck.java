@@ -1,21 +1,22 @@
 import java.awt.*;
 
-public abstract class Truck extends Car {
-    private boolean CanMove;
-
-
-    public Truck(int nrDoors, Color color, double enginePower, String modelName, double weight) {
-        super(nrDoors, color, enginePower, modelName, weight, 0, 0, 0, false);
-        this.CanMove = true;
+public abstract class Truck extends Vehicle {
+    private boolean Working;
+    private final int nrDoors;
+    public Truck(int nrDoors, Color color, double enginePower, String modelName, double weight, double x, double y, double direction) {
+        super(color, enginePower, modelName, weight, 0, 0, 0);
+        this.nrDoors = nrDoors;
+        this.Working = false;
     }
-    protected void setCanMove(boolean status) {
-        this.CanMove = status;
+    protected int getNrDoors() {
+        return nrDoors;
     }
-
-
+    protected void setWorking(boolean status) {
+        this.Working = status;
+    }
     @Override
     protected void startEngine(){
-        if (!CanMove) {
+        if (Working) {
             throw new IllegalCallerException("This truck is available for loading goods, can not move");
         }
         else {
