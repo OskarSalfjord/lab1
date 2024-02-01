@@ -10,7 +10,6 @@ public abstract class Vehicle implements Movable{
     private double y; // y coordinate
     private double direction;// direction in radians
     private boolean engineOn;
-
     public Vehicle(Color color, double enginePower, String modelName, double weight, double x, double y, double direction) {
         this.color = color;
         this.enginePower = enginePower;
@@ -27,15 +26,12 @@ public abstract class Vehicle implements Movable{
     protected double getEnginePower(){
         return enginePower;
     }
-
     protected String getModelName(){
         return modelName;
     }
-
     protected double getWeight() {
         return weight;
     }
-
     protected double getCurrentSpeed(){
         return currentSpeed;
     }
@@ -106,7 +102,7 @@ public abstract class Vehicle implements Movable{
             throw new IllegalCallerException("Turn engine on before trying to move");
         }
     }
-    protected void brake(double amount){
+    protected void brake(double amount) {
         if (amount < 0 || 1 < amount) {
             throw new IllegalArgumentException("Invalid input, valid input between [0, 1]");
         }

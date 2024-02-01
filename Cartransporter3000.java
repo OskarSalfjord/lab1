@@ -14,23 +14,15 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>, Ramp{
         this.currentRampState = Ramp.RAISED;
         this.maxWeight = 1500;
     }
-    protected Ramp getRamp() {
-        return this.currentRampState;
-    }
+    protected Ramp getRamp() {return this.currentRampState;}
     @Override
-    public void raiseRamp() {
-        this.currentRampState = Ramp.RAISED;
-        this.setCanMove(true);
-    }
+    public void raiseRamp() {this.currentRampState = Ramp.RAISED;}
     @Override
     public void lowerRamp() {
-        if(currentSpeed == 0) {
-            this.currentRampState = Ramp.LOWERED;
-            this.setCanMove(false);
+        if(getEngineOn()) {
+            throw new IllegalCallerException("The car transporters engine is on, ramp cannot be lowered");
         }
-        else{
-            throw new IllegalCallerException("The car transport is moving, ramp cannot be lowered");
-        }
+        else {this.currentRampState = Ramp.LOWERED;}
     }
     @Override
     public void loadCar(Car carToLoad) {
@@ -54,56 +46,20 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>, Ramp{
             throw new IllegalArgumentException("The car is not loadable");
         }
     }
-
     @Override
-    public int getCapacity() {
-        return capacity;
-    }
-
+    public int getCapacity() {return capacity;}
     @Override
-    public List<Car> getCarsInLoad() {
-        return loadedCars;
-    }
-
+    public List<Car> getCarsInLoad() {return loadedCars;}
     public void unLoadCar() {
         if (getRamp() == Ramp.LOWERED) {
             Car UnloadedCar = loadedCars.pop();
             UnloadedCar.setPosition(getX(), getY() - 0.5);
-
         } else {
             throw new IllegalCallerException("The ramp is raised, car can not be unloaded");
         }
     }
     @Override
     protected double speedFactor() {return getEnginePower() * 0.002 * (0.9 / (loadedCars.size() + 1));
-    }
-    @Override
-    protected void startEngine() {
-        super.startEngine();
-        for (Car car : loadedCars) {
-            car.startEngine();
-        }
-    }
-    @Override
-    protected void stopEngine() {
-        super.stopEngine();
-        for (Car car : loadedCars) {
-            car.stopEngine();
-        }
-    }
-    @Override
-    public void turnLeft() {
-        super.turnLeft();
-        for (Car car : loadedCars) {
-            car.turnLeft();
-        }
-    }
-    @Override
-    public void turnRight() {
-        super.turnRight();
-        for (Car car : loadedCars) {
-            car.turnRight();
-        }
     }
     @Override
     public void move() {
@@ -114,18 +70,11 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>, Ramp{
     }
     @Override
     protected void gas(double amount) {
-        super.gas(amount);
-        for (Car car : loadedCars) {
-            double speedfactorchange = (speedFactor() / car.getSpeedFactor());
-            car.gas(amount * speedfactorchange);
+        if (getRamp() == Ramp.LOWERED) {
+            throw new IllegalStateException("Raise ramp before you try to move");
         }
-    }
-    @Override
-    protected void brake(double amount) {
-        super.brake(amount);
-        for (Car car : loadedCars) {
-            double speedfactorchange = (speedFactor() / car.getSpeedFactor());
-            car.brake(amount * speedfactorchange);
+        else {
+            super.gas(amount);
         }
     }
 }
