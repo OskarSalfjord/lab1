@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -162,7 +161,7 @@ class CarTest {
     @Test
     void LowerRampWhileStandingStill() {
         Cartransporter.lowerRamp();
-        assertEquals(Cartransporter.getRampStatus(), Cartransporter3000.RampEnum.LOWERED);
+        assertEquals(Cartransporter.getRampStatus(), RampC.RampEnum.LOWERED);
     }
     @Test
     void LowerRampWhileMoving() {

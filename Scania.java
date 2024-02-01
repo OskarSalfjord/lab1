@@ -7,6 +7,7 @@ public class Scania extends Truck implements Ramp{
         super(2, color, 200, "Scania", 5000, x, y, direction);
         scaniaRamp = new RampC<>(rampAngle);
     }
+
     protected int getRampAngle() {return scaniaRamp.getRampStatus();}
     private void setRampAngle(int angle) {scaniaRamp.setRampStatus(angle);}
    @Override

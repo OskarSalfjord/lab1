@@ -3,32 +3,32 @@ import java.util.List;
 import java.util.Stack;
 
 public class Cartransporter3000 extends Truck implements Loadable<Car>, Ramp{
-    protected enum RampEnum {RAISED, LOWERED}
     protected Stack<Car> loadedCars = new Stack<>();
-    protected RampC<RampEnum> transporterRamp;
+    protected RampC<RampC.RampEnum> transporterRamp;
     private final int capacity;
     private final double maxWeight;
     public Cartransporter3000(Color color, double x, double y, double direction) {
         super(2, color, 500, "Cartransporter3000", 3000, x, y, direction);
         this.capacity = 2;
         this.maxWeight = 1500;
-        transporterRamp = new RampC<>(RampEnum.RAISED);
+        transporterRamp = new RampC<>(RampC.RampEnum.RAISED);
     }
-    protected RampEnum getRampStatus() {return transporterRamp.getRampStatus();}
+
+    protected RampC.RampEnum getRampStatus() {return transporterRamp.getRampStatus();}
     @Override
-    public void raiseRamp() {transporterRamp.setRampStatus(RampEnum.RAISED);}
+    public void raiseRamp() {transporterRamp.setRampStatus(RampC.RampEnum.RAISED);}
     @Override
     public void lowerRamp() {
         if(getEngineOn()) {
             throw new IllegalCallerException("The car transporters engine is on, ramp cannot be lowered");
         }
-        else {transporterRamp.setRampStatus(RampEnum.LOWERED);}
+        else {transporterRamp.setRampStatus(RampC.RampEnum.LOWERED);}
     }
     @Override
     public void loadCar(Car carToLoad) {
         if (carToLoad.getWeight() <= this.maxWeight) {
             if (Math.sqrt(Math.pow(carToLoad.getX() - this.getX(), 2) + Math.pow(carToLoad.getY() - this.getY(), 2)) <= 1) {
-                if (getRampStatus() == RampEnum.LOWERED) {
+                if (getRampStatus() == RampC.RampEnum.LOWERED) {
                     if (loadedCars.size() < capacity) {
                         loadedCars.add(carToLoad);
                         carToLoad.setPosition(this.getX(), this.getY());
@@ -51,7 +51,7 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>, Ramp{
     @Override
     public List<Car> getCarsInLoad() {return loadedCars;}
     public void unLoadCar() {
-        if (getRampStatus() == RampEnum.LOWERED) {
+        if (getRampStatus() == RampC.RampEnum.LOWERED) {
             Car UnloadedCar = loadedCars.pop();
             UnloadedCar.setPosition(getX(), getY() - 0.5);
         } else {
@@ -70,7 +70,7 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>, Ramp{
     }
     @Override
     protected void gas(double amount) {
-        if (getRampStatus() == RampEnum.LOWERED) {
+        if (getRampStatus() == RampC.RampEnum.LOWERED) {
             throw new IllegalStateException("Raise ramp before you try to move");
         }
         else {
