@@ -20,7 +20,7 @@ class CarTest {
         Volvo = new Volvo240(Color.black, 0, 0, 0);
         Saab = new Saab95(Color.red, 0, 0, 0);
         Saab2 = new Saab95(Color.CYAN, 0.5, 0, 0);
-        Scania = new Scania(Color.lightGray, -0.5, 0 , 0);
+        Scania = new Scania(Color.lightGray, -0.5, 0 , 0, 0);
         Cartransporter = new Cartransporter3000(Color.orange, 0, 0, 0);
     }
 
@@ -173,7 +173,7 @@ class CarTest {
     @Test
     void LowerRampWhileStandingStill() {
         Cartransporter.lowerRamp();
-        assertEquals(Cartransporter.getRamp(), Cartransporter3000.Ramp.LOWERED);
+        assertEquals(Cartransporter.getRampStatus(), Cartransporter3000.Ramp.LOWERED);
     }
     @Test
     void LowerRampWhileMoving() {

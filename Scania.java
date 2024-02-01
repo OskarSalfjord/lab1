@@ -1,18 +1,16 @@
 import java.awt.*;
 
+
 public class Scania extends Truck implements Ramp{
-    private int RampAngle;
-    public Scania(Color color, double x, double y, double direction) {
+    private RampC<Integer> scaniaRamp;
+    public Scania(Color color, double x, double y, double direction, int rampAngle) {
         super(2, color, 200, "Scania", 5000, x, y, direction);
-        this.RampAngle = 0;
+        scaniaRamp = new RampC<>(rampAngle);
     }
-    protected int getRampAngle() {
-        return this.RampAngle;
-    }
+    protected int getRampAngle() {return scaniaRamp.getRampStatus();}
+    private void setRampAngle(int angle) {scaniaRamp.setRampStatus(angle);}
    @Override
-   protected double speedFactor() {
-        return getEnginePower() * 0.005;
-    }
+   protected double speedFactor() {return getEnginePower() * 0.005;}
     @Override
     public void raiseRamp() { // Raises the Ramp with 5 degrees
         if (getEngineOn()) {
@@ -26,12 +24,10 @@ public class Scania extends Truck implements Ramp{
     public void lowerRamp() { // Lowers the ramp with 5 degrees
         setRampAngle(Math.max(getRampAngle() - 5, 0));
     }
-    private void setRampAngle(int angle) {
-        RampAngle = angle;
-    }
+
     @Override
     protected void gas(double amount) {
-        if (RampAngle == 0) {
+        if (getRampAngle() == 0) {
             super.gas(amount);
         }
         else
