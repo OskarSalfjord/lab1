@@ -1,4 +1,7 @@
+import java.util.List;
+
 public interface Loadable<T>{
-    //FÅ IN CAPACITY FÖR BILVERKSTAD OCH BILLAST
     void loadCar(T carToLoad);
+    int getCapacity();
+    List<T> getCarsInLoad();
 }

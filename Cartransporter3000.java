@@ -5,10 +5,8 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>{
     protected enum Ramp {
         RAISED, LOWERED
     }
-
     protected Stack<Car> loadedCars = new Stack<>();
     private Ramp currentRampState;
-
     private final int maximumLoad;
 
     private final double maxWeight;
@@ -19,16 +17,13 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>{
         this.currentRampState = Ramp.RAISED;
         this.maxWeight = 1500;
     }
-
     protected Ramp getRamp() {
         return this.currentRampState;
     }
-
     protected void raiseRamp() {
         this.currentRampState = Ramp.RAISED;
         this.setWorking(false);
     }
-
     protected void lowerRamp() {
         if(currentSpeed == 0) {
             this.currentRampState = Ramp.LOWERED;
@@ -38,7 +33,8 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>{
             throw new IllegalCallerException("The car transport is moving, ramp cannot be lowered");
         }
     }
-
+    @Override
+    public int getCapacity() {return capcity;}
     @Override
     public void loadCar(Car carToLoad) {
         if (carToLoad.getWeight() <= this.maxWeight) {
@@ -70,6 +66,8 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>{
             throw new IllegalCallerException("The ramp is raised, car can not be unloaded");
         }
     }
+    @Override
+    public Stack<Car> getCarsInLoad() {return loadedCars;}
     @Override
     protected double speedFactor() {return getEnginePower() * 0.002 * (0.9 / (loadedCars.size() + 1));
     }
