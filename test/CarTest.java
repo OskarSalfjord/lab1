@@ -3,17 +3,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.EmptyStackException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CarTest {
-
     private Saab95 Saab;
     private Saab95 Saab2;
     private Volvo240 Volvo;
     private Scania Scania;
     private Cartransporter3000 Cartransporter;
+    private List<Car> testList;
 
     @BeforeEach
     void setUp() {
@@ -23,35 +25,26 @@ class CarTest {
         Scania = new Scania(Color.lightGray, -0.5, 0 , 0, 0);
         Cartransporter = new Cartransporter3000(Color.orange, 0, 0, 0);
     }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     void getNrDoors() {
         assertEquals(2, Saab.getNrDoors());
         assertEquals(4, Volvo.getNrDoors());
     }
-
     @Test
     void getEnginePower() {
         assertEquals(125, Saab.getEnginePower());
         assertEquals(100, Volvo.getEnginePower());
     }
-
     @Test
     void getCurrentSpeed() {
         assertEquals(0, Saab.getCurrentSpeed());
         assertEquals(0, Volvo.getCurrentSpeed());
     }
-
     @Test
     void getColor() {
         assertEquals(Color.red, Saab.getColor());
         assertEquals(Color.black, Volvo.getColor());
     }
-
     @Test
     void setColor() {
         Saab.setColor(Color.blue);
@@ -60,7 +53,6 @@ class CarTest {
         Volvo.setColor(Color.pink);
         assertEquals(Color.pink, Volvo.getColor());
     }
-
     @Test
     void startEngine() {
         Saab.startEngine();
@@ -79,7 +71,6 @@ class CarTest {
         Volvo.stopEngine();
         assertFalse(Volvo.getEngineOn());
     }
-
     @Test
     void turnLeft() {
         Saab.turnLeft();
@@ -87,9 +78,7 @@ class CarTest {
 
         Volvo.turnLeft();
         assertEquals(Math.PI/2, Volvo.getDirection());
-
     }
-
     @Test
     void turnRight() {
         Saab.turnRight();
@@ -98,7 +87,6 @@ class CarTest {
         Volvo.turnRight();
         assertEquals(-Math.PI/2, Volvo.getDirection());
     }
-
     @Test
     void move() {
         Saab.startEngine();
@@ -157,23 +145,24 @@ class CarTest {
     @Test
     void raisingRamp() {
         Scania.raiseRamp();
-        assertEquals(1, Scania.getRampAngle());
+        assertEquals(5, Scania.getRampAngle());
     }
     @Test
     void changingAngleWhileMoving() {
         Scania.startEngine();
         Scania.gas(0.3);
-        assertThrows(IllegalCallerException.class, () -> Scania.raiseRamp());
+        assertThrows(IllegalStateException.class, () -> Scania.raiseRamp());
     }
     @Test
     void MovingWhileTruckBedIsRaised() {
         Scania.raiseRamp();
-        assertThrows(IllegalCallerException.class, () -> Scania.startEngine());
+        Scania.startEngine();
+        assertThrows(IllegalStateException.class, () -> Scania.gas(0.0000001));
     }
     @Test
     void LowerRampWhileStandingStill() {
         Cartransporter.lowerRamp();
-        assertEquals(Cartransporter.getRampStatus(), Cartransporter3000.Ramp.LOWERED);
+        assertEquals(Cartransporter.getRampStatus(), Cartransporter3000.RampEnum.LOWERED);
     }
     @Test
     void LowerRampWhileMoving() {
@@ -282,6 +271,35 @@ class CarTest {
         assertFalse(Cartransporter.getCurrentSpeed() == 0 && Cartransporter.loadedCars.peek().getCurrentSpeed() == 0);
         Cartransporter.brake(1);
         assertTrue(Cartransporter.getCurrentSpeed() == 0 && Cartransporter.loadedCars.peek().getCurrentSpeed() == 0);
+    }
+    @Test
+    void ScaniaRaiseLowerRamp() {
+        Scania.raiseRamp();
+        assertEquals(Scania.getRampAngle(), 5);
+        Scania.lowerRamp();
+        assertEquals(Scania.getRampAngle(), 0);
+    }
+    @Test
+    void CartransportCapacity() {
+        assertEquals(Cartransporter.getCapacity(), 2);
+    }
+    @Test
+    void CartransportContents() {
+        Cartransporter.lowerRamp();
+        Cartransporter.loadCar(Volvo);
+        testList = new ArrayList<>();
+        testList.add(Volvo);
+
+        assertEquals(Cartransporter.getCarsInLoad(), testList);
+    }
+
+    @Test
+    void getSpeedFactor() {
+        assertEquals(Volvo.getSpeedFactor(), 1.25);
+    }
+    @Test
+    void getModelName() {
+        assertEquals(Volvo.getModelName(), "Volvo240");
     }
 
 
