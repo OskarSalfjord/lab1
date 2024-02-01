@@ -1,34 +1,26 @@
 import java.awt.*;
+import java.util.List;
 import java.util.Stack;
 
 public class Cartransporter3000 extends Truck implements Loadable<Car>{
-    protected enum Ramp {
-        RAISED, LOWERED
-    }
-
+    protected enum Ramp {RAISED, LOWERED}
     protected Stack<Car> loadedCars = new Stack<>();
     private Ramp currentRampState;
-
     private final int capacity;
-
     private final double maxWeight;
-
     public Cartransporter3000(Color color, double x, double y, double direction) {
         super(2, color, 500, "Cartransporter3000", 3000, x, y, direction);
         this.capacity = 2;
         this.currentRampState = Ramp.RAISED;
         this.maxWeight = 1500;
     }
-
     protected Ramp getRamp() {
         return this.currentRampState;
     }
-
     protected void raiseRamp() {
         this.currentRampState = Ramp.RAISED;
         this.setCanMove(true);
     }
-
     protected void lowerRamp() {
         if(currentSpeed == 0) {
             this.currentRampState = Ramp.LOWERED;
@@ -38,7 +30,6 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>{
             throw new IllegalCallerException("The car transport is moving, ramp cannot be lowered");
         }
     }
-
     @Override
     public void loadCar(Car carToLoad) {
         if (carToLoad.getWeight() <= this.maxWeight) {
@@ -61,6 +52,17 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>{
             throw new IllegalArgumentException("The car is not loadable");
         }
     }
+
+    @Override
+    public int getCapacity() {
+        return capacity;
+    }
+
+    @Override
+    public List<Car> getCarsInLoad() {
+        return loadedCars;
+    }
+
     public void unLoadCar() {
         if (getRamp() == Ramp.LOWERED) {
             Car UnloadedCar = loadedCars.pop();

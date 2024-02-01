@@ -23,7 +23,7 @@ public class Scania extends Truck{
         else {
             if (70 > RampAngle) {
                 RampAngle += 1;
-                setCanMove(true);
+                setCanMove(false);
             }
         }
     }
@@ -32,7 +32,7 @@ public class Scania extends Truck{
         if (RampAngle > 0) {
             RampAngle -= 1;
             if (RampAngle == 0) {
-                setCanMove(false);
+                setCanMove(true);
             }
         }
     }
