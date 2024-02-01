@@ -26,6 +26,4 @@ public abstract class Truck extends Vehicle {
             super.startEngine();
         }
     }
-    protected abstract void raiseRamp();
-    protected abstract void lowerRamp();
 }

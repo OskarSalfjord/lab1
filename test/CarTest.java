@@ -157,7 +157,7 @@ class CarTest {
     @Test
     void raisingRamp() {
         Scania.raiseRamp();
-        assertEquals(1, Scania.getTruckBedAngle());
+        assertEquals(1, Scania.getRampAngle());
     }
     @Test
     void changingAngleWhileMoving() {

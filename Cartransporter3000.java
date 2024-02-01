@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.Stack;
 
-public class Cartransporter3000 extends Truck implements Loadable<Car>{
+public class Cartransporter3000 extends Truck implements Loadable<Car>, Ramp{
     protected enum Ramp {RAISED, LOWERED}
     protected Stack<Car> loadedCars = new Stack<>();
     private Ramp currentRampState;
@@ -17,11 +17,13 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>{
     protected Ramp getRamp() {
         return this.currentRampState;
     }
-    protected void raiseRamp() {
+    @Override
+    public void raiseRamp() {
         this.currentRampState = Ramp.RAISED;
         this.setCanMove(true);
     }
-    protected void lowerRamp() {
+    @Override
+    public void lowerRamp() {
         if(currentSpeed == 0) {
             this.currentRampState = Ramp.LOWERED;
             this.setCanMove(false);
