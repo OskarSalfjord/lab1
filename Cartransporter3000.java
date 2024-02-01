@@ -9,13 +9,13 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>{
     protected Stack<Car> loadedCars = new Stack<>();
     private Ramp currentRampState;
 
-    private final int maximumLoad;
+    private final int capacity;
 
     private final double maxWeight;
 
     public Cartransporter3000(Color color, double x, double y, double direction) {
         super(2, color, 500, "Cartransporter3000", 3000, x, y, direction);
-        this.maximumLoad = 2;
+        this.capacity = 2;
         this.currentRampState = Ramp.RAISED;
         this.maxWeight = 1500;
     }
@@ -26,13 +26,13 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>{
 
     protected void raiseRamp() {
         this.currentRampState = Ramp.RAISED;
-        this.setWorking(false);
+        this.setCanMove(true);
     }
 
     protected void lowerRamp() {
         if(currentSpeed == 0) {
             this.currentRampState = Ramp.LOWERED;
-            this.setWorking(true);
+            this.setCanMove(false);
         }
         else{
             throw new IllegalCallerException("The car transport is moving, ramp cannot be lowered");
@@ -44,7 +44,7 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>{
         if (carToLoad.getWeight() <= this.maxWeight) {
             if (Math.sqrt(Math.pow(carToLoad.getX() - this.getX(), 2) + Math.pow(carToLoad.getY() - this.getY(), 2)) <= 1) {
                 if (getRamp() == Ramp.LOWERED) {
-                    if (loadedCars.size() < maximumLoad) {
+                    if (loadedCars.size() < capacity) {
                         loadedCars.add(carToLoad);
                         carToLoad.setPosition(this.getX(), this.getY());
                         carToLoad.setDirection(getDirection());
