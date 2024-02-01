@@ -14,7 +14,7 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>{
     private final double maxWeight;
 
     public Cartransporter3000(Color color, double x, double y, double direction) {
-        super(2, color, 500, "Cartransporter3000", 3000, 0, 0, 0);
+        super(2, color, 500, "Cartransporter3000", 3000, x, y, direction);
         this.maximumLoad = 2;
         this.currentRampState = Ramp.RAISED;
         this.maxWeight = 1500;

@@ -14,6 +14,7 @@ class CarTest {
     private Volvo240 Volvo;
     private Scania Scania;
     private Cartransporter3000 Cartransporter;
+
     @BeforeEach
     void setUp() {
         Volvo = new Volvo240(Color.black, 0, 0, 0);

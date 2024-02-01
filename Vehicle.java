@@ -1,11 +1,10 @@
 import java.awt.*;
 public abstract class Vehicle implements Movable{
+    //FIXA FLAK INTERFACE?
     private Color color;
     private final double enginePower;
     private String modelName;
-
     private final double weight;
-
     protected double currentSpeed;
     private double x;// x coordinate
     private double y; // y coordinate
