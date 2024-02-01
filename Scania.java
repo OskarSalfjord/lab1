@@ -47,9 +47,9 @@ public class Scania extends Truck implements Ramp{
             }
         }
         else {
-            while (DistanceFromCurrAngle < i) {
+            while (i < Math.abs(DistanceFromCurrAngle)) {
                 lowerRamp();
-                DistanceFromCurrAngle++;
+                i++;
             }
         }
     }
