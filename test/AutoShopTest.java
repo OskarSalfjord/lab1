@@ -40,7 +40,7 @@ class AutoShopTest {
         CheckTestList.add(volvo1);
         CheckTestList.add(saab1);
 
-        assertEquals(AllCars.getCarsInShop(), CheckTestList);
+        assertEquals(AllCars.getCarsInLoad(), CheckTestList);
     }
 
     @Test
@@ -52,7 +52,7 @@ class AutoShopTest {
         CheckTestList.add(saab1);
         CheckTestList.add(volvo2);
 
-        assertEquals(AllCars.getCarsInShop(), CheckTestList);
+        assertEquals(AllCars.getCarsInLoad(), CheckTestList);
 
         //VolvoShop.loadCar(saab1);
     }
@@ -62,6 +62,6 @@ class AutoShopTest {
         AllCars.unLoadCar(saab1);
         List<Car> CheckTestList = new ArrayList<>();
         CheckTestList.add(volvo1);
-        assertEquals(AllCars.getCarsInShop(), CheckTestList);
+        assertEquals(AllCars.getCarsInLoad(), CheckTestList);
     }
 }
