@@ -155,24 +155,19 @@ class CarTest {
         assertEquals(1.25, Volvo.speedFactor());
     }
     @Test
-    void gettingAccurateTBA() {
-        Scania.setTruckBedAngle(1);
+    void raisingRamp() {
+        Scania.raiseRamp();
         assertEquals(1, Scania.getTruckBedAngle());
-    }
-    @Test
-    void setTruckBedAngleNegative() {
-        assertThrows(IllegalArgumentException.class, () -> Scania.setTruckBedAngle(-69));
-        assertThrows(IllegalArgumentException.class, () -> Scania.setTruckBedAngle(1337));
     }
     @Test
     void changingAngleWhileMoving() {
         Scania.startEngine();
         Scania.gas(0.3);
-        assertThrows(IllegalCallerException.class, () -> Scania.setTruckBedAngle(5));
+        assertThrows(IllegalCallerException.class, () -> Scania.raiseRamp());
     }
     @Test
     void MovingWhileTruckBedIsRaised() {
-        Scania.setTruckBedAngle(69);
+        Scania.raiseRamp();
         assertThrows(IllegalCallerException.class, () -> Scania.startEngine());
     }
     @Test

@@ -7,6 +7,7 @@ public class Scania extends Truck{
         super(2,color, 200, "Scania", 5000, x, y, direction);
         this.RampAngle = 0;
         stopEngine();
+        setCanMove(true);
     }
     protected double getTruckBedAngle() {
         return this.RampAngle;
