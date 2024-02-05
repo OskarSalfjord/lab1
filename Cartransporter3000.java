@@ -14,7 +14,7 @@ public class Cartransporter3000 extends Truck implements Loadable<Car>, Ramp{
         transporterRamp = new RampC<>(RampC.RampEnum.RAISED);
     }
 
-    protected RampC.RampEnum getRampStatus() {return transporterRamp.getRampStatus();}
+    public RampC.RampEnum getRampStatus() {return transporterRamp.getRampStatus();}
     @Override
     public void raiseRamp() {transporterRamp.setRampStatus(RampC.RampEnum.RAISED);}
     @Override

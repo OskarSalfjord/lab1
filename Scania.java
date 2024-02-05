@@ -27,6 +27,11 @@ public class Scania extends Truck implements Ramp{
     }
 
     @Override
+    public Object getRampStatus() {
+        return getRampAngle();
+    }
+
+    @Override
     protected void gas(double amount) {
         if (getRampAngle() == 0) {
             super.gas(amount);
